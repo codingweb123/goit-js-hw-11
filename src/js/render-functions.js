@@ -1,13 +1,17 @@
 import SimpleLightbox from "simplelightbox"
 import "simplelightbox/dist/simple-lightbox.min.css"
 const gallery = document.querySelector(".gallery")
-export const showLoader = () => gallery.innerHTML = "Loading images, please wait..."
+let globalLightbox
+export const showLoader = () =>
+	(gallery.querySelector(".loader").innerHTML =
+		"Loading images, please wait...")
 export const hideLoader = () => {
 	return new Promise(res => {
 		setTimeout(() => res("loaded"), 800)
 	})
 }
-export const clearGallery = () => (gallery.innerHTML = "")
+export const clearGallery = () =>
+	(gallery.innerHTML = `<span class="loader"></span>`)
 export const createMarkup = ({
 	webformatURL,
 	largeImageURL,
@@ -44,11 +48,13 @@ export const createMarkup = ({
 	`
 }
 export const createGallery = images => {
-	let itemsMarkup = ``
+	let itemsMarkup = `<span class="loader"></span>`
 	images.map(item => (itemsMarkup += createMarkup(item)))
 	document.querySelector(".gallery").innerHTML = itemsMarkup
-	new SimpleLightbox(".gallery a", {
-		captionsData: "alt",
-		captionDelay: 250,
-	})
+	if (!globalLightbox) {
+		globalLightbox = new SimpleLightbox(".gallery a", {
+			captionsData: "alt",
+			captionDelay: 250,
+		})
+	} else globalLightbox.refresh()
 }

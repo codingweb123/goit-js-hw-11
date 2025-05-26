@@ -18,6 +18,7 @@ form.addEventListener("submit", e => {
 		})
 		return
 	}
+	clearGallery()
 	showLoader()
 	getImagesByQuery(query)
 		.then(data => {
