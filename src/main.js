@@ -22,26 +22,24 @@ form.addEventListener("submit", e => {
 	showLoader()
 	getImagesByQuery(query)
 		.then(data => {
-			if (data.data.hits.length > 0) {
-				hideLoader().then(() => {
-					createGallery(data.data.hits)
-				})
+			if (data.hits.length > 0) {
+				hideLoader().then(() => createGallery(data.hits))
 			} else {
-				clearGallery()
-				iziToast.error({
-					title: "Error!",
-					message:
-						"Sorry, there are no images matching your search query. Please try again!",
+				hideLoader(false).then(() => {
+					iziToast.error({
+						title: "Error!",
+						message:
+							"Sorry, there are no images matching your search query. Please try again!",
+					})
 				})
-				return
 			}
 		})
-		.catch(error => {
-			iziToast.error({
-				title: "Error!",
-				message: "Failed to load images",
+		.catch(() => {
+			hideLoader(false).then(() => {
+				iziToast.error({
+					title: "Error!",
+					message: "Failed to load images",
+				})
 			})
-			console.log("🚀 ~ error:", error)
 		})
-		.finally(hideLoader)
 })

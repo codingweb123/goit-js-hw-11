@@ -5,9 +5,12 @@ let globalLightbox
 export const showLoader = () =>
 	(gallery.querySelector(".loader").innerHTML =
 		"Loading images, please wait...")
-export const hideLoader = () => {
+export const hideLoader = (wait = true) => {
 	return new Promise(res => {
-		setTimeout(() => res("loaded"), 800)
+		setTimeout(() => {
+			clearGallery()
+			res("loaded")
+		}, wait ? 800 : 100)
 	})
 }
 export const clearGallery = () =>

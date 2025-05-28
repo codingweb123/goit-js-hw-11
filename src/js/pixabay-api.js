@@ -2,7 +2,7 @@ import axios from "axios"
 import { PIXABAY_API_KEY } from "./settings"
 axios.defaults.baseURL = "https://pixabay.com/api/"
 export const getImagesByQuery = async query => {
-	const data = await axios
+	const response = await axios
 		.get("", {
 			params: {
 				key: PIXABAY_API_KEY,
@@ -12,6 +12,5 @@ export const getImagesByQuery = async query => {
 				safesearch: true,
 			},
 		})
-		.then(data => data)
-	return data
+	return response.data
 }
