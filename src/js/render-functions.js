@@ -1,20 +1,15 @@
 import SimpleLightbox from "simplelightbox"
 import "simplelightbox/dist/simple-lightbox.min.css"
-const gallery = document.querySelector(".gallery")
+const gallery = document.querySelector(".gallery"),
+	loader = gallery.querySelector(".loader")
 let globalLightbox
-export const showLoader = () =>
-	(gallery.querySelector(".loader").innerHTML =
-		"Loading images, please wait...")
-export const hideLoader = (wait = true) => {
-	return new Promise(res => {
-		setTimeout(() => {
-			clearGallery()
-			res("loaded")
-		}, wait ? 800 : 100)
-	})
+export const showLoader = () => {
+	loader.innerHTML = "Loading images, please wait..."
+	loader.classList.remove("visually-hidden")
 }
+export const hideLoader = () => loader.classList.add("visually-hidden")
 export const clearGallery = () =>
-	(gallery.innerHTML = `<span class="loader"></span>`)
+	gallery.querySelectorAll(".gallery-item").forEach(i => i.remove())
 export const createMarkup = ({
 	webformatURL,
 	largeImageURL,
@@ -51,9 +46,13 @@ export const createMarkup = ({
 	`
 }
 export const createGallery = images => {
-	let itemsMarkup = `<span class="loader"></span>`
-	images.map(item => (itemsMarkup += createMarkup(item)))
-	document.querySelector(".gallery").innerHTML = itemsMarkup
+	const itemsMarkup = images.reduce(
+		(acc, item) => (acc += createMarkup(item)),
+		""
+	)
+	document
+		.querySelector(".gallery")
+		.insertAdjacentHTML("beforeend", itemsMarkup)
 	if (!globalLightbox) {
 		globalLightbox = new SimpleLightbox(".gallery a", {
 			captionsData: "alt",
