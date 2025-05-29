@@ -1,12 +1,12 @@
-import{a as u,S as f,i as n}from"./assets/vendor-CrlV4O_2.js";(function(){const r=document.createElement("link").relList;if(r&&r.supports&&r.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))i(e);new MutationObserver(e=>{for(const t of e)if(t.type==="childList")for(const a of t.addedNodes)a.tagName==="LINK"&&a.rel==="modulepreload"&&i(a)}).observe(document,{childList:!0,subtree:!0});function o(e){const t={};return e.integrity&&(t.integrity=e.integrity),e.referrerPolicy&&(t.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?t.credentials="include":e.crossOrigin==="anonymous"?t.credentials="omit":t.credentials="same-origin",t}function i(e){if(e.ep)return;e.ep=!0;const t=o(e);fetch(e.href,t)}})();const m="50513820-fe52286b6fb0f12cd684dc96e";u.defaults.baseURL="https://pixabay.com/api/";const y=async s=>(await u.get("",{params:{key:m,q:s,image_type:"photo",orientation:"horizontal",safesearch:!0}})).data,d=document.querySelector(".gallery");let l;const g=()=>d.querySelector(".loader").innerHTML="Loading images, please wait...",c=(s=!0)=>new Promise(r=>{setTimeout(()=>{p(),r("loaded")},s?800:100)}),p=()=>d.innerHTML='<span class="loader"></span>',h=({webformatURL:s,largeImageURL:r,tags:o,likes:i,views:e,comments:t,downloads:a})=>`
+import{a as d,S as f,i as l}from"./assets/vendor-CrlV4O_2.js";(function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))a(e);new MutationObserver(e=>{for(const r of e)if(r.type==="childList")for(const i of r.addedNodes)i.tagName==="LINK"&&i.rel==="modulepreload"&&a(i)}).observe(document,{childList:!0,subtree:!0});function s(e){const r={};return e.integrity&&(r.integrity=e.integrity),e.referrerPolicy&&(r.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?r.credentials="include":e.crossOrigin==="anonymous"?r.credentials="omit":r.credentials="same-origin",r}function a(e){if(e.ep)return;e.ep=!0;const r=s(e);fetch(e.href,r)}})();const m="50513820-fe52286b6fb0f12cd684dc96e";d.defaults.baseURL="https://pixabay.com/api/";const p=async o=>(await d.get("",{params:{key:m,q:o,image_type:"photo",orientation:"horizontal",safesearch:!0}})).data,u=document.querySelector(".gallery"),c=u.querySelector(".loader");let n;const y=()=>{c.innerHTML="Loading images, please wait...",c.classList.remove("visually-hidden")},g=()=>c.classList.add("visually-hidden"),h=()=>u.querySelectorAll(".gallery-item").forEach(o=>o.remove()),b=({webformatURL:o,largeImageURL:t,tags:s,likes:a,views:e,comments:r,downloads:i})=>`
 	<li class="gallery-item">
-		<a href="${r}">
-			<img src="${s}" data-src="${r}" alt="${o}" />
+		<a href="${t}">
+			<img src="${o}" data-src="${t}" alt="${s}" />
 		</a>
 		<div class="info">
 			<p>
 				<b>Likes</b>
-				${i}
+				${a}
 			</p>
 			<p>
 				<b>Views</b>
@@ -14,13 +14,13 @@ import{a as u,S as f,i as n}from"./assets/vendor-CrlV4O_2.js";(function(){const 
 			</p>
 			<p>
 				<b>Comments</b>
-				${t}
+				${r}
 			</p>
 			<p>
 				<b>Downloads</b>
-				${a}
+				${i}
 			</p>
 		</div>
 	</li>
-	`,b=s=>{let r='<span class="loader"></span>';s.map(o=>r+=h(o)),document.querySelector(".gallery").innerHTML=r,l?l.refresh():l=new f(".gallery a",{captionsData:"alt",captionDelay:250})},L=document.querySelector(".form");L.addEventListener("submit",s=>{s.preventDefault();const r=s.target.elements["search-text"].value.trim()??"";if(r===""){n.error({title:"Error!",message:"Failed to load images"});return}p(),g(),y(r).then(o=>{o.hits.length>0?c().then(()=>b(o.hits)):c(!1).then(()=>{n.error({title:"Error!",message:"Sorry, there are no images matching your search query. Please try again!"})})}).catch(()=>{c(!1).then(()=>{n.error({title:"Error!",message:"Failed to load images"})})})});
+	`,L=o=>{const t=o.reduce((s,a)=>s+=b(a),"");document.querySelector(".gallery").insertAdjacentHTML("beforeend",t),n?n.refresh():n=new f(".gallery a",{captionsData:"alt",captionDelay:250})},v=document.querySelector(".form");v.addEventListener("submit",o=>{o.preventDefault();const t=o.target.elements["search-text"].value.trim()??"";if(t===""){l.error({title:"Error!",message:"Failed to load images"});return}h(),y(),p(t).then(s=>{s.hits.length>0?L(s.hits):l.error({title:"Error!",message:"Sorry, there are no images matching your search query. Please try again!"})}).catch(()=>{l.error({title:"Error!",message:"Failed to load images"})}).finally(g)});
 //# sourceMappingURL=index.js.map
